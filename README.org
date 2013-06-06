@@ -1,0 +1,15 @@
+Travail sur les résultats du premier tour de la présidentielle de 2012 par
+bureau de vote de la commune de Lyon.
+
+Source des résultats électoraux :
+
+http://www.elections.lyon.fr/scrutin/resultats.php?SCRUTIN=33&TOUR=1&DECOUPAGE=1&TYPE=1
+
+Source du fond de carte des bureaux de vote :
+
+http://smartdata.grandlyon.com/citoyennete/contour-de-bureau-de-vote-de-la-ville-de-lyon/
+
+
+Fichiers :
+- =scrape.R= : extraction des résultats depuis les pages Web, et sauvegarde
+  dans =data/votes.csv=.
