@@ -331,16 +331,21 @@ scrape.bureau <- function(id) {
                    bayrou=bayrou,
                    dupont.aignan=dupont.aignan,
                    hollande=hollande)
-    data.frame(id=as.character(id), lapply(result, as.numeric))
+    data.frame(num_bureau=as.character(id), lapply(result, as.numeric))
 }
 
 ## Extraction de l'ensemble des bureaux
 votes <- do.call(rbind, lapply(liste.bureaux$id, scrape.bureau))
+
+head(votes)
+
 ## Fusion des id et noms de bureaux
+votes$id <- votes$num_bureau
+votes$num_bureau <- as.numeric(as.character(votes$id))
 votes <- merge(liste.bureaux, votes)
 
 ## Check que la somme des pourcentages vaut 100
-table(apply(votes[,6:15],1,sum))
+table(apply(votes[,7:16],1,sum))
 
 ## Sauvegarde des données extraites
 write.csv(votes, "data/votes.csv")
