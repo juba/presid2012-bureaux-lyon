@@ -1,0 +1,5 @@
+* Problèmes dans le fichier shapefile
+
+Le fichier shapefile a dû être édité manuellement sous QGis, problème de
+"hole" sur le bureau 519.
+
