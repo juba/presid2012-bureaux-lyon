@@ -31,7 +31,8 @@ arr <- fortify(lyon.arr, region="nom")
 
 ## Chargement données résultat et fusion sur données geo
 votes <- read.csv("data/votes.csv")
-lyon.data <- merge(lyon@data, subset(votes, select=-id), by="num_bureau",all.x=TRUE, all.y=TRUE)
+lyon.data <- lyon@data
+lyon.data <- merge(lyon.data, subset(votes, select=-id), by="num_bureau",all.x=TRUE, all.y=TRUE)
 lyon.geo <- join(lyon.points, lyon.data, by="id")
 
 
@@ -195,22 +196,27 @@ for (groupe in 1:nb.classes.brut) {
 
 
 ######################################################################
-#### Export KML
+#### Export GeoJSON
 ######################################################################
 
 library(RColorBrewer)
+## Calcul des couleurs des groupes
 palette <- brewer.pal(nb.classes, "Accent")
 cols <- paste(palette,sep="")
 lyon.data$couleurs <- cols[groupes]
 
-vars <- c("num_bureau", "lepen","sarkozy","dupont.aignan","bayrou","hollande",
-          "joly","melenchon","poutou","arthaud","cheminade",
-          "blancs","abst","groupes","couleurs")
-
+## Export des bureaux de vote avec attributs
 lyon.json <- lyon
-lyon.json@data <- merge(lyon.json@data, lyon.data, by="num_bureau")
-#lyon.json@data$couleurs <- c("#FDC086","#00FF00","#FF0000")
+lyon.json@data <- merge(lyon.json@data, lyon.data[,c("num_bureau", "groupes", "couleurs", "nom.y", "inscrits", vars)], by="num_bureau")
+lyon.json@data <- lyon.json@data[order(as.numeric(lyon.json@data$id)),]
+## Renommage pour compatibilité javascript
+lyon.json@data <- rename.variable(lyon.json@data,"dupont.aignan", "dupontaignan")
+lyon.json@data <- rename.variable(lyon.json@data,"nom.y", "nombureau")
 writeOGR(lyon.json, "/var/www/openlayers/lyon.groupes.json", "lyon.groupes", "GeoJSON")
 
-class(lyon.json@data$couleurs)
-lyon.json@data$couleurs
+## Export contours arrondissements
+writeOGR(as(lyon.arr, "SpatialLinesDataFrame"), "/var/www/openlayers/lyon.arr.json", "lyon.arr", "GeoJSON")
+
+
+head(lyon.data)
+head(lyon.json@data)
