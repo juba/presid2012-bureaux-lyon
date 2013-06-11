@@ -17,7 +17,7 @@ Fichiers :
 - =analyse.R= : traitement des données, analyses, sorties graphiques.
 
 
-* Notes sur les données cartographiques
+*** Notes sur les données cartographiques
 
 Le fichier shapefile a dû être édité manuellement sous QGis, problème de
 "hole" sur le bureau 519.
