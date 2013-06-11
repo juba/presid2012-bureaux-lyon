@@ -13,3 +13,17 @@ http://smartdata.grandlyon.com/citoyennete/contour-de-bureau-de-vote-de-la-ville
 Fichiers :
 - =scrape.R= : extraction des résultats depuis les pages Web, et sauvegarde
   dans =data/votes.csv=.
+- =fonctions.R= : fonctions sourcées dans les autres fichiers
+- =analyse.R= : traitement des données, analyses, sorties graphiques.
+
+
+* Notes sur les données cartographiques
+
+Le fichier shapefile a dû être édité manuellement sous QGis, problème de
+"hole" sur le bureau 519.
+
+Les contours des arrondissements ont été générés manuellement sous QGis :
+- fusion de l'ensemble des polygones des bureaux de chaque arrondissement
+- correction manuelle des problèmes résiduels
+
+
